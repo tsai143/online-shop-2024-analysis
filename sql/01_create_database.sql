@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS online_shop_2024;
+USE online_shop_2024;
+
