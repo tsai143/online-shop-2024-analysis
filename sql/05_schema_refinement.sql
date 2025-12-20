@@ -58,6 +58,12 @@ ALTER TABLE suppliers
   MODIFY email VARCHAR(150),
   MODIFY phone_number VARCHAR(20),
   MODIFY address VARCHAR(255);
+  
+  DESCRIBE orders;
+DESCRIBE payments;
+DESCRIBE products;
+
+
 
 
 
