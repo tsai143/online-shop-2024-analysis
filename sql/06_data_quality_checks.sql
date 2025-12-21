@@ -1,36 +1,75 @@
+-- =====================================================
+-- DATABASE SELECTION
+-- =====================================================
+-- Select the working database for analysis
 USE online_shop_2024;
 
-SELECT 'customers' AS table_name, COUNT(*) FROM customers;
-SELECT 'orders', COUNT(*) FROM orders;
-SELECT 'order_items', COUNT(*) FROM order_items;
-SELECT 'products', COUNT(*) FROM products;
-SELECT 'payments', COUNT(*) FROM payments;
-SELECT 'reviews', COUNT(*) FROM reviews;
-SELECT 'shipments', COUNT(*) FROM shipments;
-SELECT 'suppliers', COUNT(*) FROM suppliers;
+
+-- =====================================================
+-- BASIC ROW COUNT CHECK (DATA VOLUME VALIDATION)
+-- =====================================================
+-- These queries help verify that data is loaded correctly
+-- and give an overview of record counts per table
+
+SELECT 'customers' AS table_name, COUNT(*) AS total_records FROM customers;
+SELECT 'orders' AS table_name, COUNT(*) AS total_records FROM orders;
+SELECT 'order_items' AS table_name, COUNT(*) AS total_records FROM order_items;
+SELECT 'products' AS table_name, COUNT(*) AS total_records FROM products;
+SELECT 'payments' AS table_name, COUNT(*) AS total_records FROM payments;
+SELECT 'reviews' AS table_name, COUNT(*) AS total_records FROM reviews;
+SELECT 'shipments' AS table_name, COUNT(*) AS total_records FROM shipments;
+SELECT 'suppliers' AS table_name, COUNT(*) AS total_records FROM suppliers;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: CUSTOMERS TABLE
+-- =====================================================
+-- Identify missing (NULL) values in key customer attributes
+-- Useful for understanding data completeness and cleanup needs
 
 SELECT
   SUM(customer_id IS NULL) AS customer_id_nulls,
   SUM(first_name IS NULL) AS first_name_nulls,
   SUM(last_name IS NULL) AS last_name_nulls,
   SUM(email IS NULL) AS email_nulls,
-  SUM(phone_number IS NULL) AS phone_nulls
+  SUM(phone_number IS NULL) AS phone_number_nulls
 FROM customers;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: ORDERS TABLE
+-- =====================================================
+-- Validate order-level fields including customer linkage
+-- and financial completeness
 
 SELECT
   SUM(order_id IS NULL) AS order_id_nulls,
   SUM(customer_id IS NULL) AS customer_id_nulls,
   SUM(order_date IS NULL) AS order_date_nulls,
-  SUM(total_price IS NULL) AS total_amount_nulls
+  SUM(total_price IS NULL) AS total_price_nulls
 FROM orders;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: ORDER_ITEMS TABLE
+-- =====================================================
+-- Ensure integrity of transactional line items
+-- Important for revenue and quantity-based analysis
 
 SELECT
   SUM(order_item_id IS NULL) AS order_item_id_nulls,
   SUM(order_id IS NULL) AS order_id_nulls,
   SUM(product_id IS NULL) AS product_id_nulls,
   SUM(quantity IS NULL) AS quantity_nulls,
-  SUM(price_at_purchase IS NULL) AS price_nulls
+  SUM(price_at_purchase IS NULL) AS price_at_purchase_nulls
 FROM order_items;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: PRODUCTS TABLE
+-- =====================================================
+-- Validate product catalog attributes
+-- Used for pricing, category analysis, and supplier mapping
 
 SELECT
   SUM(product_id IS NULL) AS product_id_nulls,
@@ -40,6 +79,13 @@ SELECT
   SUM(supplier_id IS NULL) AS supplier_id_nulls
 FROM products;
 
+
+-- =====================================================
+-- DATA QUALITY CHECK: PAYMENTS TABLE
+-- =====================================================
+-- Check completeness of payment transactions
+-- Critical for revenue reconciliation and payment method analysis
+
 SELECT
   SUM(payment_id IS NULL) AS payment_id_nulls,
   SUM(order_id IS NULL) AS order_id_nulls,
@@ -47,6 +93,13 @@ SELECT
   SUM(payment_method IS NULL) AS payment_method_nulls,
   SUM(transaction_status IS NULL) AS transaction_status_nulls
 FROM payments;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: REVIEWS TABLE
+-- =====================================================
+-- Assess customer feedback completeness
+-- Useful for sentiment and product performance analysis
 
 SELECT
   SUM(review_id IS NULL) AS review_id_nulls,
@@ -56,6 +109,13 @@ SELECT
   SUM(review_text IS NULL) AS review_text_nulls,
   SUM(review_date IS NULL) AS review_date_nulls
 FROM reviews;
+
+
+-- =====================================================
+-- DATA QUALITY CHECK: SHIPMENTS TABLE
+-- =====================================================
+-- Validate logistics and delivery-related fields
+-- Important for fulfillment and delivery performance KPIs
 
 SELECT
   SUM(shipment_id IS NULL) AS shipment_id_nulls,
@@ -67,14 +127,22 @@ SELECT
   SUM(shipment_status IS NULL) AS shipment_status_nulls
 FROM shipments;
 
+
+-- =====================================================
+-- DATA QUALITY CHECK: SUPPLIERS TABLE
+-- =====================================================
+-- Ensure supplier master data completeness
+-- Useful for vendor analysis and supply chain reporting
+
 SELECT 
-	SUM(supplier_id IS NULL) AS supplier_id_nulls,
-    SUM(supplier_name IS NULL) AS supplier_name_nulls,
-    SUM(contact_name IS NULL) AS contact_name_nulls,
-    SUM(address IS NULL) AS address_nulls,
-    SUM(phone_number IS NULL) AS phone_number_nulls,
-    SUM(email IS NULL) AS email_nulls
+  SUM(supplier_id IS NULL) AS supplier_id_nulls,
+  SUM(supplier_name IS NULL) AS supplier_name_nulls,
+  SUM(contact_name IS NULL) AS contact_name_nulls,
+  SUM(address IS NULL) AS address_nulls,
+  SUM(phone_number IS NULL) AS phone_number_nulls,
+  SUM(email IS NULL) AS email_nulls
 FROM suppliers;
+
     
     /* ============================================================
    WEEK 2 – DATA QUALITY CHECKS
