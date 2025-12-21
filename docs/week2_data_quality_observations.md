@@ -132,5 +132,18 @@ All checks performed so far are read-only and do not modify raw data.
 Cleaning rules defined and approved.
 Execution to be implemented in next step using SQL views.
 
+---
+
+## Step 5: Clean View Implementation
+
+- Implemented non-destructive SQL views for analysis
+- Aggregated split-line order items
+- Flagged zero-price promotional items
+- Filtered revenue-safe payments
+- Excluded invalid review ratings
+- Preserved all raw data tables
+
+These views will be used for all analytical queries.
+
 
 
