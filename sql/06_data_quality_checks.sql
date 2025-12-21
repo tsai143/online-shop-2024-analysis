@@ -76,3 +76,160 @@ SELECT
     SUM(email IS NULL) AS email_nulls
 FROM suppliers;
     
+    /* ============================================================
+   WEEK 2 – DATA QUALITY CHECKS
+   STEP 3: DUPLICATE ANALYSIS & BUSINESS RULE VALIDATION
+
+   Purpose:
+   - Identify duplicate records
+   - Validate business logic constraints
+   - Flag issues for controlled cleaning (next step)
+   - NO UPDATE / DELETE operations here
+
+   Database: online_shop_2024
+   ============================================================ */
+   
+   /* ============================================================
+   SECTION 1: DUPLICATE ANALYSIS (PRIMARY IDENTIFIERS)
+   ============================================================ */
+
+/* Check for duplicate customer IDs
+   Expectation: customer_id should be unique */
+    SELECT customer_id, COUNT(*) AS cnt
+FROM customers
+GROUP BY customer_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate order IDs
+   Each order_id should represent one order */
+SELECT order_id, COUNT(*) AS cnt
+FROM orders
+GROUP BY order_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate order_item IDs
+   Each order_item_id should be unique */
+SELECT order_item_id, COUNT(*) AS cnt
+FROM order_items
+GROUP BY order_item_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate product IDs */
+SELECT product_id, COUNT(*) AS cnt
+FROM products
+GROUP BY product_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate payment IDs */
+SELECT payment_id, COUNT(*) AS cnt
+FROM payments
+GROUP BY payment_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate review IDs */
+SELECT review_id, COUNT(*) AS cnt
+FROM reviews
+GROUP BY review_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate shipment IDs */
+SELECT shipment_id, COUNT(*) AS cnt
+FROM shipments
+GROUP BY shipment_id
+HAVING COUNT(*) > 1;
+
+/* Check for duplicate supplier IDs */
+SELECT supplier_id, COUNT(*) AS cnt
+FROM suppliers
+GROUP BY supplier_id
+HAVING COUNT(*) > 1;
+
+/* ============================================================
+   SECTION 2: LOGICAL / COMPOSITE DUPLICATE CHECKS
+   (Duplicates that may not violate PK but affect analysis)
+   ============================================================ */
+
+/* Same customer placing multiple orders on the same date
+   Could be valid or accidental duplicates */
+SELECT customer_id, order_date, COUNT(*) AS order_count
+FROM orders
+GROUP BY customer_id, order_date
+HAVING COUNT(*) > 1;
+
+/* Same product appearing multiple times in the same order
+   Usually should be aggregated into one row */
+SELECT order_id, product_id, COUNT(*) AS item_count
+FROM order_items
+GROUP BY order_id, product_id
+HAVING COUNT(*) > 1;
+
+SELECT order_id,
+       product_id,
+       quantity,
+       price_at_purchase,
+       COUNT(*) AS cnt
+FROM order_items
+GROUP BY order_id, product_id, quantity, price_at_purchase
+HAVING COUNT(*) > 1;
+
+
+/* ============================================================
+   SECTION 3: BUSINESS RULE VALIDATION
+   ============================================================ */
+
+/* Quantity and price sanity check
+   Quantity and price_at_purchase should always be positive */
+SELECT *
+FROM order_items
+WHERE quantity <= 0
+   OR price_at_purchase <= 0;
+
+/* Orders with zero or negative total price
+   Indicates calculation or data entry issue */
+SELECT *
+FROM orders
+WHERE total_price <= 0;
+
+/* Payments with invalid or missing transaction status
+   Only successful/completed payments should be counted as revenue */
+SELECT *
+FROM payments
+WHERE transaction_status IS NULL
+   OR transaction_status NOT IN ('Success', 'Completed');
+
+/* Reviews with invalid ratings
+   Rating should be between 1 and 5 */
+SELECT *
+FROM reviews
+WHERE rating NOT BETWEEN 1 AND 5;
+
+/* Shipments marked as shipped but missing tracking information
+   Logistics data quality issue */
+SELECT *
+FROM shipments
+WHERE shipment_status = 'Shipped'
+  AND tracking_number IS NULL;
+  
+  /* Orders without corresponding customers (soft validation) */
+SELECT *
+FROM orders
+WHERE customer_id IS NULL;
+
+
+
+/* ============================================================
+   END OF WEEK 2 – STEP 3 CHECKS
+
+   Output of these queries is used to:
+   - Decide cleaning rules
+   - Design clean views / tables
+   - Build reliable analytics in Week 3
+
+   No data is modified in this step.
+   ============================================================ */
+
+
+
+
+
+
