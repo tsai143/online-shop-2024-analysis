@@ -112,5 +112,25 @@ All checks performed so far are read-only and do not modify raw data.
 
 \- They will be handled using filtering logic in cleaned views
 
+---
+
+## Step 4: Data Cleaning Strategy
+
+### Approach
+- Raw tables will remain unchanged
+- Data cleaning will be performed using SQL views
+- Views provide safe, reproducible, and reviewable logic
+
+### Key Cleaning Decisions
+- Order items with split lines will be aggregated in clean views
+- Items with zero price will be flagged as free/promotional
+- Only successful or completed payments will be included in revenue analysis
+- Invalid review ratings will be excluded from analytical views
+- Multiple orders by same customer on same date are treated as valid
+
+### Outcome
+Cleaning rules defined and approved.
+Execution to be implemented in next step using SQL views.
+
 
 
