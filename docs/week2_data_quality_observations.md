@@ -145,5 +145,18 @@ Execution to be implemented in next step using SQL views.
 
 These views will be used for all analytical queries.
 
+---
+
+## Step 6: Clean View Validation
+
+- Verified existence of all clean views
+- Row count comparisons matched expected behavior
+- Clean revenue is lower than raw revenue as expected
+- Pending and failed payments excluded from revenue
+- Shipment tracking flags validated
+- Manual spot checks confirmed data consistency
+
+Clean views approved for analytical use.
+
 
 
