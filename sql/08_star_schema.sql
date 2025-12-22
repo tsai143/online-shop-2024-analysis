@@ -136,6 +136,115 @@ LEFT JOIN dim_date dd
   ON fs.date_id = dd.date_id
 WHERE dd.date_id IS NULL;
 
+/* ------------------------------------------------------------
+   QUERY 1: Total Revenue
+   Purpose:
+   - Calculate overall business revenue
+   - Used for executive-level reporting
+   - Validates revenue correctness in fact_sales
+   ------------------------------------------------------------ */
+
+SELECT
+    SUM(revenue) AS total_revenue
+FROM fact_sales;
+
+/* ------------------------------------------------------------
+   QUERY 2: Revenue by Product Category
+   Purpose:
+   - Identify top-performing product categories
+   - Validate product dimension joins
+   - Common input for category-level dashboards
+   ------------------------------------------------------------ */
+
+SELECT
+    dp.category,
+    SUM(fs.revenue) AS category_revenue
+FROM fact_sales fs
+JOIN dim_product dp
+    ON fs.product_id = dp.product_id
+GROUP BY dp.category;
+
+/* ------------------------------------------------------------
+   QUERY 3: Revenue Trend by Month
+   Purpose:
+   - Analyze revenue growth or decline over time
+   - Validate date dimension usability
+   - Supports time-series dashboards
+   ------------------------------------------------------------ */
+
+SELECT
+    dd.year,
+    dd.month,
+    SUM(fs.revenue) AS monthly_revenue
+FROM fact_sales fs
+JOIN dim_date dd
+    ON fs.date_id = dd.date_id
+GROUP BY dd.year, dd.month
+ORDER BY dd.year, dd.month;
+
+/* ------------------------------------------------------------
+   QUERY 3: Revenue Trend by Month
+   Purpose:
+   - Analyze revenue growth or decline over time
+   - Validate date dimension usability
+   - Supports time-series dashboards
+   ------------------------------------------------------------ */
+
+SELECT
+    dd.year,
+    dd.month,
+    SUM(fs.revenue) AS monthly_revenue
+FROM fact_sales fs
+JOIN dim_date dd
+    ON fs.date_id = dd.date_id
+GROUP BY dd.year, dd.month
+ORDER BY dd.year, dd.month;
+
+/* ------------------------------------------------------------
+   QUERY 4: Top Customers by Revenue
+   Purpose:
+   - Identify highest spending customers
+   - Direct input to RFM Monetary scoring
+   - Used for loyalty and retention strategies
+   ------------------------------------------------------------ */
+
+SELECT
+    dc.customer_id,
+    dc.first_name,
+    dc.last_name,
+    SUM(fs.revenue) AS total_spent
+FROM fact_sales fs
+JOIN dim_customer dc
+    ON fs.customer_id = dc.customer_id
+GROUP BY
+    dc.customer_id,
+    dc.first_name,
+    dc.last_name
+ORDER BY total_spent DESC
+LIMIT 10;
+
+/* ------------------------------------------------------------
+   QUERY 5: Performance Validation
+   Purpose:
+   - Verify index usage
+   - Ensure joins are optimized
+   - Confirm execution time < 2 seconds
+   ------------------------------------------------------------ */
+
+EXPLAIN ANALYZE
+SELECT
+    dc.customer_id,
+    SUM(fs.revenue)
+FROM fact_sales fs
+JOIN dim_customer dc
+    ON fs.customer_id = dc.customer_id
+GROUP BY dc.customer_id;
+
+
+
+
+
+
 
 
 
