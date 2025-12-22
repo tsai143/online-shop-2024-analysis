@@ -146,3 +146,53 @@ Only stable, non-transactional attributes were included in dimensions.
 
 
 
+
+
+---
+
+
+
+\## Step 2: Fact\_Sales Table Creation
+
+
+
+\### Grain
+
+\- One row per product per order
+
+
+
+\### Measures
+
+\- quantity
+
+\- revenue (cleaned and validated)
+
+
+
+\### Keys
+
+\- customer\_id
+
+\- product\_id
+
+\- date\_id
+
+\- order\_id (degenerate dimension)
+
+
+
+\### Data Integrity
+
+\- Revenue includes only successful/completed payments
+
+\- Built strictly from clean views
+
+\- Indexed for performance
+
+
+
+fact\_sales table created and validated successfully.
+
+
+
