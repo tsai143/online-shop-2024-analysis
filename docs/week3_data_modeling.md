@@ -250,3 +250,15 @@ Star schema verified and approved for analytical and Python-based modeling.
 
 
 
+\## Step 5.1: Fact Table Enrichment (Python)
+
+
+
+\- Loaded customer, product, and date dimensions from MySQL
+
+\- Enriched fact\_sales with descriptive attributes using left joins
+
+\- Created analytics-ready fact\_enriched dataset
+
+
+
