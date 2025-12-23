@@ -262,3 +262,17 @@ Star schema verified and approved for analytical and Python-based modeling.
 
 
 
+\## Step 5.2: RFM Metric Calculation
+
+
+
+\- Computed Recency as days since last purchase
+
+\- Computed Frequency as number of unique orders
+
+\- Computed Monetary as total customer spend
+
+\- Metrics aggregated at customer level for segmentation
+
+
+
