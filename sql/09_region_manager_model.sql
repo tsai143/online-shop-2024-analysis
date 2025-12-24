@@ -134,4 +134,28 @@ GROUP BY region;
 -- Check manager coverage
 SELECT * FROM dim_manager;
 
+-- unknown region check
+SELECT
+    COUNT(*) AS unknown_customers
+FROM customer_region
+WHERE region = 'Unknown';
+
+-- Region coverage check
+SELECT
+    region,
+    COUNT(*) AS managers
+FROM dim_manager
+GROUP BY region;
+
+-- Sales by region (END-TO-END CHECK)
+SELECT
+    cr.region,
+    SUM(fs.revenue) AS total_revenue
+FROM fact_sales fs
+JOIN customer_region cr
+    ON fs.customer_id = cr.customer_id
+GROUP BY cr.region;
+
+
+
 
