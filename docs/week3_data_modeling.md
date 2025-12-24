@@ -412,6 +412,18 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 step-7 :Dashboard-Ready Data Preparation (Python + SQL)
 
+\## Step 7: Dashboard Data Preparation
+
+
+
+\- Created pre-aggregated, dashboard-ready tables in MySQL
+
+\- Prepared sales trend, product performance, region-wise, and segment-wise datasets
+
+\- Ensured dashboards perform no joins or calculations
+
+\- Decoupled analytics logic from visualization layer
+
 
 
 

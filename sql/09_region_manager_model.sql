@@ -156,6 +156,7 @@ JOIN customer_region cr
     ON fs.customer_id = cr.customer_id
 GROUP BY cr.region;
 
+SELECT COUNT(*) FROM customer_rfm_segments;
 
 
 
