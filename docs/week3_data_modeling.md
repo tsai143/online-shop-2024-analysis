@@ -394,3 +394,25 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 
 
+\## Step 6.5: Region \& Manager Derivation
+
+
+
+\- Source system did not provide explicit region or manager mappings
+
+\- Regions were derived from customer address data using predefined state-level business rules
+
+\- Created region master and customer–region mapping tables
+
+\- Implemented manager–region ownership model to support regional analytics and row-level security
+
+\- All assumptions documented and logic validated
+
+
+
+step-7 :Dashboard-Ready Data Preparation (Python + SQL)
+
+
+
+
+
