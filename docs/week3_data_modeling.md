@@ -276,3 +276,19 @@ Star schema verified and approved for analytical and Python-based modeling.
 
 
 
+
+
+\## Step 5.3: RFM Scoring
+
+
+
+\- Applied quantile-based scoring (1–5 scale) to Recency, Frequency, and Monetary metrics
+
+\- Recency scored inversely to reflect recent customer activity
+
+\- Combined R, F, and M scores into a unified RFM\_Score
+
+\- Scoring approach ensures balanced customer segmentation
+
+
+
