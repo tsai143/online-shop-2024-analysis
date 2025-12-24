@@ -292,3 +292,105 @@ Star schema verified and approved for analytical and Python-based modeling.
 
 
 
+
+
+\## Step 6: Market Basket Analysis (Association Rule Mining)
+
+
+
+\### Objective
+
+To identify frequently co-purchased products and uncover hidden purchase patterns that can be used for:
+
+\- Cross-selling strategies
+
+\- Product bundling
+
+\- Recommendation engines
+
+\- Promotional planning
+
+
+
+---
+
+
+
+\### Data Preparation
+
+\- Transaction-level data was extracted from the fact table (`fact\_sales`) and enriched with product names from `dim\_product`
+
+\- Only valid purchase records (quantity > 0) were considered
+
+\- Data was reshaped into a transaction–product matrix suitable for association rule mining
+
+
+
+---
+
+
+
+\### Methodology
+
+\- Implemented \*\*Apriori algorithm\*\* using the `mlxtend` library
+
+\- Generated frequent itemsets based on minimum support threshold (2%)
+
+\- Derived association rules using:
+
+&nbsp; - \*\*Confidence\*\* to measure likelihood of cross-purchase
+
+&nbsp; - \*\*Lift\*\* to validate statistical significance beyond random chance
+
+
+
+---
+
+
+
+\### Key Metrics Used
+
+\- \*\*Support\*\*: Frequency of product combinations across all orders
+
+\- \*\*Confidence\*\*: Probability of purchasing product B given product A
+
+\- \*\*Lift\*\*: Strength of association (>1 indicates meaningful relationship)
+
+
+
+---
+
+
+
+\### Business Validation
+
+\- Filtered rules using:
+
+&nbsp; - Confidence ≥ 60%
+
+&nbsp; - Lift ≥ 1.5
+
+\- Ensured resulting rules are actionable and business-relevant
+
+\- Strong associations identified between commonly co-purchased products
+
+
+
+---
+
+
+
+\### Outcome
+
+\- Produced a set of validated association rules suitable for:
+
+&nbsp; - Cross-sell recommendations
+
+&nbsp; - Dashboard insights
+
+&nbsp; - Strategic decision-making
+
+\- Results are ready for visualization and stakeholder consumption
+
+
+

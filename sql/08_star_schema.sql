@@ -243,6 +243,13 @@ GROUP BY dc.customer_id;
 
 
 
+SELECT
+    fs.order_id,
+    dp.product_name
+FROM fact_sales fs
+JOIN dim_product dp
+    ON fs.product_id = dp.product_id
+WHERE fs.quantity > 0;
 
 
 
