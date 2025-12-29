@@ -1,28 +1,12 @@
-\# Week 3: Data Modeling \& Analytics Foundation
+**Week 3: Data Modeling \& Analytics Foundation**
 
 
 
-\## Objective
+**Objective**
 
-Design and implement a production-grade Star Schema to support analytical queries,
+&nbsp;	Design and implement a production-grade Star Schema to support analytical queries,
 
-advanced customer analytics, and dashboarding.
-
-
-
----
-
-
-
-\## Step 1: Dimension Table Creation
-
-
-
-\### Overview
-
-Dimension tables were created to support descriptive analysis and slicing of fact data.
-
-Only stable, non-transactional attributes were included in dimensions.
+&nbsp;	advanced customer analytics, and dashboarding.
 
 
 
@@ -30,31 +14,51 @@ Only stable, non-transactional attributes were included in dimensions.
 
 
 
-\### Dim\_Customer
+**Step 1: Dimension Table Creation**
+
+
+
+**Overview**
+
+&nbsp;	Dimension tables were created to support descriptive analysis and slicing of fact data.
+
+&nbsp;	Only stable, non-transactional attributes were included in dimensions.
+
+
+
+---
+
+
+
+**Dim\_Customer**
 
 \- Source table: customers
 
 \- Grain: One row per customer
 
-\- Attributes included:
 
-&nbsp; - customer\_id (Primary Key)
 
-&nbsp; - first\_name
+**- Attributes included:**
 
-&nbsp; - last\_name
+  - customer\_id (Primary Key)
 
-&nbsp; - email
+  - first\_name
 
-&nbsp; - phone\_number
+  - last\_name
 
-&nbsp; - address
+  - email
 
-\- Purpose:
+  - phone\_number
 
-&nbsp; - Customer-level analysis
+  - address
 
-&nbsp; - Regional segmentation (future dashboards)
+
+
+**- Purpose:**
+
+  - Customer-level analysis
+
+  - Regional segmentation (future dashboards)
 
 
 
@@ -62,29 +66,33 @@ Only stable, non-transactional attributes were included in dimensions.
 
 
 
-\### Dim\_Product
+**Dim\_Product**
 
 \- Source tables: products, suppliers
 
 \- Grain: One row per product
 
-\- Attributes included:
 
-&nbsp; - product\_id (Primary Key)
 
-&nbsp; - product\_name
+**- Attributes included:**
 
-&nbsp; - category
+  - product\_id (Primary Key)
 
-&nbsp; - catalog\_price
+  - product\_name
 
-&nbsp; - supplier\_name
+  - category
 
-\- Notes:
+  - catalog\_price
 
-&nbsp; - Catalog price is included as a descriptive attribute
+  - supplier\_name
 
-&nbsp; - Transactional price remains in fact table
+
+
+**- Notes:**
+
+  - Catalog price is included as a descriptive attribute
+
+  - Transactional price remains in fact table
 
 
 
@@ -92,29 +100,33 @@ Only stable, non-transactional attributes were included in dimensions.
 
 
 
-\### Dim\_Date
+**Dim\_Date**
 
 \- Source: orders.order\_date
 
 \- Grain: One row per calendar date
 
-\- Attributes included:
 
-&nbsp; - date\_id (Primary Key)
 
-&nbsp; - year
+**- Attributes included:**
 
-&nbsp; - month
+  - date\_id (Primary Key)
 
-&nbsp; - quarter
+  - year
 
-&nbsp; - day\_of\_week
+  - month
 
-\- Purpose:
+  - quarter
 
-&nbsp; - Time-series analysis
+  - day\_of\_week
 
-&nbsp; - Trend reporting
+
+
+**- Purpose:**
+
+  - Time-series analysis
+
+  - Trend reporting
 
 
 
@@ -318,7 +330,7 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 \### Data Preparation
 
-\- Transaction-level data was extracted from the fact table (`fact\_sales`) and enriched with product names from `dim\_product`
+\- Transaction-level data was extracted from the fact table (`fact\\\_sales`) and enriched with product names from `dim\\\_product`
 
 \- Only valid purchase records (quantity > 0) were considered
 
@@ -338,9 +350,9 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 \- Derived association rules using:
 
-&nbsp; - \*\*Confidence\*\* to measure likelihood of cross-purchase
+  - \*\*Confidence\*\* to measure likelihood of cross-purchase
 
-&nbsp; - \*\*Lift\*\* to validate statistical significance beyond random chance
+  - \*\*Lift\*\* to validate statistical significance beyond random chance
 
 
 
@@ -366,9 +378,9 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 \- Filtered rules using:
 
-&nbsp; - Confidence ≥ 60%
+  - Confidence ≥ 60%
 
-&nbsp; - Lift ≥ 1.5
+  - Lift ≥ 1.5
 
 \- Ensured resulting rules are actionable and business-relevant
 
@@ -384,11 +396,11 @@ To identify frequently co-purchased products and uncover hidden purchase pattern
 
 \- Produced a set of validated association rules suitable for:
 
-&nbsp; - Cross-sell recommendations
+  - Cross-sell recommendations
 
-&nbsp; - Dashboard insights
+  - Dashboard insights
 
-&nbsp; - Strategic decision-making
+  - Strategic decision-making
 
 \- Results are ready for visualization and stakeholder consumption
 
@@ -423,8 +435,4 @@ step-7 :Dashboard-Ready Data Preparation (Python + SQL)
 \- Ensured dashboards perform no joins or calculations
 
 \- Decoupled analytics logic from visualization layer
-
-
-
-
 

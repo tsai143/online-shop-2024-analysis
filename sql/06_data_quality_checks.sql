@@ -151,7 +151,7 @@ FROM suppliers;
    Purpose:
    - Identify duplicate records
    - Validate business logic constraints
-   - Flag issues for controlled cleaning (next step)
+   - Flag issues for controlled cleaning
    - NO UPDATE / DELETE operations here
 
    Database: online_shop_2024

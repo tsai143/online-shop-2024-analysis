@@ -1,12 +1,15 @@
-\# Week 2 – Data Quality Observations
+**Week 2 – Data Quality Observations**
 
 
 
-\## Overview
+**Overview**
 
 Week 2 focuses on understanding data quality before applying any cleaning logic.
 
-All checks performed so far are read-only and do not modify raw data.
+	All checks performed so far are read-only and do not modify raw data.
+
+
+
 
 
 
@@ -14,29 +17,16 @@ All checks performed so far are read-only and do not modify raw data.
 
 
 
-\## Step 2.1: Baseline Validation
+**Step 2.1: Baseline Validation**
 
-\- All tables successfully loaded into MySQL
+&nbsp;	\\- All tables successfully loaded into MySQL
 
-\- Row counts captured to serve as baseline for future comparison
+	\\- Row counts captured to serve as baseline for future comparison
 
-\- No missing tables identified
-
-
-
----
+	\\- No missing tables identified
 
 
 
-\## Step 2.2: NULL Value Analysis
-
-\- NULL checks performed across all tables using actual schema
-
-\- Primary identifier columns (IDs) contain no NULL values
-
-\- Some nullable fields (e.g., contact details, optional attributes) contain NULLs
-
-\- No critical blocking issues identified at this stage
 
 
 
@@ -44,35 +34,18 @@ All checks performed so far are read-only and do not modify raw data.
 
 
 
-\## Step 3.3: Logical Duplicate Analysis
+**Step 2.2: NULL Value Analysis**
+
+&nbsp;	\\- NULL checks performed across all tables using actual schema
+
+	\\- Primary identifier columns (IDs) contain no NULL values
+
+	\\- Some nullable fields (e.g., contact details, optional attributes) contain NULLs
+
+	\\- No critical blocking issues identified at this stage
 
 
 
-\### Orders Table
-
-\- Multiple records found for the same `customer\_id` on the same `order\_date`
-
-\- These may represent legitimate multiple orders placed by a customer on the same day
-
-\- No assumptions made at this stage; decision deferred to analysis phase
-
-
-
-\### Order\_Items Table
-
-\- Same `product\_id` appears multiple times within the same `order\_id`
-
-\- Initial duplicate check returned ~5000 rows with `COUNT = 2`
-
-\- Diagnostic validation confirmed:
-
-&nbsp; - No exact duplicate rows exist
-
-&nbsp; - Each row represents a split-line item with quantity = 1
-
-\- This indicates an intentional transactional design rather than data duplication
-
-\- Aggregation of quantity and revenue will be handled during cleaning/analysis
 
 
 
@@ -80,83 +53,139 @@ All checks performed so far are read-only and do not modify raw data.
 
 
 
-\## Current Status
-
-\- No raw data has been modified
-
-\- All findings documented for transparency
-
-\- Dataset deemed suitable to proceed with business-rule validation
+**Step 3.3: Logical Duplicate Analysis**
 
 
 
-\### Order\_Items – Zero Price Issue
+**Orders Table**
 
-\- Identified order\_items with price\_at\_purchase = 0.00
+&nbsp;	\\- Multiple records found for the same `customer\\\_id` on the same `order\\\_date`
 
-\- Quantity is valid but price violates business rules
+	\\- These may represent legitimate multiple orders placed by a customer on the same day
 
-\- Possible causes include promotional items or missing pricing data
-
-\- These records will be excluded or handled separately in revenue calculations
+	\\- No assumptions made at this stage; decision deferred to analysis phase
 
 
 
-\### Payments – Transaction Status Issues
 
-\- Approximately 3000 payment records have transaction\_status as Pending or Failed
 
-\- These represent incomplete or unsuccessful transactions
 
-\- Such records should not be included in revenue calculations
+**Order\_Items Table**
 
-\- They will be handled using filtering logic in cleaned views
+&nbsp;	\\- Same `product\\\_id` appears multiple times within the same `order\\\_id`
+
+	\\- Initial duplicate check returned ~5000 rows with `COUNT = 2`
+
+	\\- Diagnostic validation confirmed:
+
+	\&nbsp; - No exact duplicate rows exist
+
+	\&nbsp; - Each row represents a split-line item with quantity = 1
+
+	\\- This indicates an intentional transactional design rather than data duplication
+
+	\\- Aggregation of quantity and revenue will be handled during cleaning/analysis
+
+
+
+
+
 
 ---
 
-## Step 4: Data Cleaning Strategy
 
-### Approach
-- Raw tables will remain unchanged
-- Data cleaning will be performed using SQL views
-- Views provide safe, reproducible, and reviewable logic
 
-### Key Cleaning Decisions
-- Order items with split lines will be aggregated in clean views
-- Items with zero price will be flagged as free/promotional
-- Only successful or completed payments will be included in revenue analysis
-- Invalid review ratings will be excluded from analytical views
-- Multiple orders by same customer on same date are treated as valid
+**Current Status**
 
-### Outcome
+&nbsp;	\\- No raw data has been modified
+
+	\\- All findings documented for transparency
+
+	\\- Dataset deemed suitable to proceed with business-rule validation
+
+
+
+
+
+
+**Order\_Items – Zero Price Issue**
+
+&nbsp;	- Identified order\_items with price\_at\_purchase = 0.00
+
+&nbsp;	- Quantity is valid but price violates business rules
+
+&nbsp;	- Possible causes include promotional items or missing pricing data
+
+&nbsp;	- These records will be excluded or handled separately in revenue calculations
+
+
+
+**Payments – Transaction Status Issues**
+
+&nbsp;	- Approximately 3000 payment records have transaction\_status as Pending or Failed
+
+&nbsp;	- These represent incomplete or unsuccessful transactions
+
+&nbsp;	- Such records should not be included in revenue calculations
+
+&nbsp;	- They will be handled using filtering logic in cleaned views
+
+---
+
+**Step 4: Data Cleaning Strategy**
+
+**Approach**
+
+
+
+* Raw tables will remain unchanged
+* Data cleaning will be performed using SQL views
+* Views provide safe, reproducible, and reviewable logic
+
+
+
+**Key Cleaning Decisions**
+
+* Order items with split lines will be aggregated in clean views
+* Items with zero price will be flagged as free/promotional
+* Only successful or completed payments will be included in revenue analysis
+* Invalid review ratings will be excluded from analytical views
+* Multiple orders by same customer on same date are treated as valid
+
+
+
+**Outcome**
+
 Cleaning rules defined and approved.
 Execution to be implemented in next step using SQL views.
 
+
+
 ---
 
-## Step 5: Clean View Implementation
+**Step 5: Clean View Implementation**
 
-- Implemented non-destructive SQL views for analysis
-- Aggregated split-line order items
-- Flagged zero-price promotional items
-- Filtered revenue-safe payments
-- Excluded invalid review ratings
-- Preserved all raw data tables
+* Implemented non-destructive SQL views for analysis
+* Aggregated split-line order items
+* Flagged zero-price promotional items
+* Filtered revenue-safe payments
+* Excluded invalid review ratings
+* Preserved all raw data tables
 
 These views will be used for all analytical queries.
 
+
+
 ---
 
-## Step 6: Clean View Validation
+**Step 6: Clean View Validation**
 
-- Verified existence of all clean views
-- Row count comparisons matched expected behavior
-- Clean revenue is lower than raw revenue as expected
-- Pending and failed payments excluded from revenue
-- Shipment tracking flags validated
-- Manual spot checks confirmed data consistency
+* Verified existence of all clean views
+* Row count comparisons matched expected behavior
+* Clean revenue is lower than raw revenue as expected
+* Pending and failed payments excluded from revenue
+* Shipment tracking flags validated
+* Manual spot checks confirmed data consistency
 
 Clean views approved for analytical use.
-
-
 

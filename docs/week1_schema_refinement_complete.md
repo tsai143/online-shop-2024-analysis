@@ -1,54 +1,52 @@
-\# Week 1 – Schema Refinement Completed
+**Week 1 – Schema Refinement Completed**
 
 
 
-\## Summary
+**Summary**
 
-All tables were initially imported using TEXT data types to avoid import errors.
+&nbsp;	All tables were initially imported using TEXT data types to avoid import errors.
 
-After successful imports, schema refinement was performed using ALTER TABLE.
-
-
-
-\## Changes Applied
-
-\- customer\_id, order\_id, product\_id converted to INT
-
-\- Names and text fields converted to VARCHAR
-
-\- Monetary values converted to DECIMAL
-
-\- Date fields converted to DATE
+&nbsp;	After successful imports, schema refinement was performed using ALTER TABLE.
 
 
 
-\## Tables Updated
+**Changes Applied**
 
-\- customers
+&nbsp;	- customer\_id, order\_id, product\_id converted to INT
 
-\- orders
+&nbsp;	- Names and text fields converted to VARCHAR
 
-\- order\_items
+&nbsp;	- Monetary values converted to DECIMAL
 
-\- products
-
-\- payments
-
-\- reviews
-
-\- shipments
-
-\- suppliers
+&nbsp;	- Date fields converted to DATE
 
 
 
-\## Validation
+**Tables Updated**
 
-\- ALTER TABLE executed without errors
+&nbsp;	- customers
 
-\- No data loss observed
+&nbsp;	- orders
 
-\- Row counts verified before and after changes
+&nbsp;	- order\_items
+
+&nbsp;	- products
+
+&nbsp;	- payments
+
+&nbsp;	- reviews
+
+&nbsp;	- shipments
+
+&nbsp;	- suppliers
 
 
+
+**Validation**
+
+&nbsp;	- ALTER TABLE executed without errors
+
+&nbsp;	- No data loss observed
+
+&nbsp;	- Row counts verified before and after changes
 

@@ -1,3 +1,4 @@
+/* MODIFYING TABLE DATATYPES */
 ALTER TABLE customers
   MODIFY customer_id INT,
   MODIFY first_name VARCHAR(100),
@@ -5,8 +6,12 @@ ALTER TABLE customers
   MODIFY address VARCHAR(255),
   MODIFY email VARCHAR(150),
   MODIFY phone_number VARCHAR(20);
+  
+  -- RENAMEING TABLE NAME
   RENAME TABLE payment TO payments;
+  
   SHOW TABLES;
+  
   ALTER TABLE orders
   MODIFY order_id INT,
   MODIFY order_date DATE,
@@ -59,6 +64,8 @@ ALTER TABLE suppliers
   MODIFY phone_number VARCHAR(20),
   MODIFY address VARCHAR(255);
   
+  -- VALIDATION OF DATATYPE FOR COLUMNS
+  DESCRIBE CUSTOMERS;
   DESCRIBE orders;
 DESCRIBE payments;
 DESCRIBE products;
