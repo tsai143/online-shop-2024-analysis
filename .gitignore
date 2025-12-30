@@ -5,3 +5,6 @@ __pycache__/
 
 # Environment
 .env
+# Power BI rules (Week-4)
+powerbi/*.pbix
+powerbi/screenshots/
