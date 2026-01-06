@@ -7,4 +7,4 @@ __pycache__/
 .env
 # Power BI rules (Week-4)
 powerbi/*.pbix
-powerbi/screenshots/
+powerbi/screenshots/python/notebooks/*.csv
